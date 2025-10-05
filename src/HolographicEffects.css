@@ -1,0 +1,159 @@
+/* HolographicEffects.css */
+
+.holographic-effects {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* Голографические фигуры */
+.hologram {
+  position: absolute;
+  border: 2px solid;
+  animation: holoFloat linear infinite;
+}
+
+.hologram.hexagon {
+  border-radius: 0;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+.hologram.circle {
+  border-radius: 50%;
+}
+
+.hologram.triangle {
+  border-radius: 0;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.hologram.square {
+  border-radius: 0;
+}
+
+.dark .hologram {
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 0 5px rgba(255, 255, 255, 0.05),
+    inset 0 0 5px rgba(255, 255, 255, 0.05);
+}
+
+.light .hologram {
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 
+    0 0 5px rgba(0, 0, 0, 0.05),
+    inset 0 0 5px rgba(0, 0, 0, 0.05);
+}
+
+@keyframes holoFloat {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(0.5);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate(100px, -100px) rotate(360deg) scale(0.5);
+    opacity: 0;
+  }
+}
+
+/* Голографические линии */
+.holo-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.holo-line {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  animation: holoLineMove linear infinite;
+}
+
+.dark .holo-line {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  box-shadow: 0 0 3px rgba(255, 255, 255, 0.1);
+}
+
+.light .holo-line {
+  background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.1), transparent);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes holoLineMove {
+  0% {
+    transform: translateY(-100vh);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+/* Голографические точки */
+.holo-dots {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.holo-dot {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  animation: holoDotPulse linear infinite;
+}
+
+.dark .holo-dot {
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.2), transparent);
+  box-shadow: 0 0 3px rgba(255, 255, 255, 0.1);
+}
+
+.light .holo-dot {
+  background: radial-gradient(circle, rgba(0, 0, 0, 0.2), transparent);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes holoDotPulse {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  20% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  80% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}

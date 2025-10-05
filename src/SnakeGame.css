@@ -1,55 +1,1263 @@
 /* SnakeGame.css */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 .snake-game {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
+  z-index: 10;
+  padding: 2rem;
+  font-family: 'Press Start 2P', monospace;
+}
+
+.game-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding: 1rem 2rem;
+  background: #000000;
+  border: 3px solid #ffffff;
+  box-shadow: 
+    0 0 0 2px #000000,
+    inset 0 0 0 2px #ffffff,
+    4px 4px 0px #ffffff,
+    8px 8px 0px #000000;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.score {
+  font-size: 1.2rem;
+  color: #ffffff;
+  text-shadow: 
+    2px 2px 0px #000000,
+    4px 4px 0px #ffffff;
+  margin: 0;
+  animation: pixelScore 2s ease-in-out infinite alternate;
+}
+
+@keyframes pixelScore {
+  0% { 
+    text-shadow: 
+      2px 2px 0px #000000,
+      4px 4px 0px #ffffff;
+  }
+  100% { 
+    text-shadow: 
+      2px 2px 0px #000000,
+      4px 4px 0px #ffffff,
+      6px 6px 0px #000000;
+  }
+}
+
+.game-info {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.6rem;
+  color: #ffffff;
+  width: 100%;
+  max-width: 400px;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-info p {
+  margin: 0;
+  padding: 0.5rem 1rem;
+  background: #000000;
+  border: 2px solid #ffffff;
+  box-shadow: 
+    2px 2px 0px #ffffff,
+    4px 4px 0px #000000;
 }
 
 .game-board {
   display: grid;
   margin: 20px;
-  border: 2px solid #000;
+  border: 4px solid #ffffff;
   width: fit-content;
   height: fit-content;
+  background: #000000;
+  box-shadow: 
+    0 0 0 2px #000000,
+    inset 0 0 0 2px #ffffff,
+    4px 4px 0px #ffffff,
+    8px 8px 0px #000000;
+  position: relative;
+  animation: glitchBoard 4s ease-in-out infinite alternate;
+}
+
+.game-board::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(255, 255, 255, 0.02) 3px,
+      rgba(255, 255, 255, 0.02) 6px
+    );
+  pointer-events: none;
+  animation: glitchLines 2s linear infinite;
+}
+
+.game-board::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 3px,
+      rgba(255, 255, 255, 0.01) 3px,
+      rgba(255, 255, 255, 0.01) 6px
+    );
+  pointer-events: none;
+  animation: glitchLines 1.5s linear infinite reverse;
+}
+
+@keyframes glitchBoard {
+  0% { 
+    box-shadow: 
+      0 0 0 2px #000000,
+      inset 0 0 0 2px #ffffff,
+      4px 4px 0px #ffffff,
+      8px 8px 0px #000000;
+  }
+  100% { 
+    box-shadow: 
+      0 0 0 2px #000000,
+      inset 0 0 0 2px #ffffff,
+      4px 4px 0px #ffffff,
+      8px 8px 0px #000000,
+      0 0 10px rgba(255, 255, 255, 0.1);
+  }
+}
+
+@keyframes glitchLines {
+  0% { transform: translateY(0); opacity: 0.5; }
+  50% { transform: translateY(1px); opacity: 0.8; }
+  100% { transform: translateY(0); opacity: 0.5; }
 }
 
 .cell {
   width: 15px;
   height: 15px;
-  border: 1px solid #ccc;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.1s ease;
 }
 
 .snake {
-  background-color: white;
+  background: #ffffff;
+  border: 1px solid #000000;
+  box-shadow: 
+    1px 1px 0px #000000,
+    2px 2px 0px #ffffff;
+  position: relative;
+}
+
+.snake::before {
+  content: '';
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 3px;
+  height: 3px;
+  background: #000000;
   border-radius: 50%;
+  box-shadow: 
+    4px 0px 0px #000000,
+    0px 4px 0px #000000,
+    4px 4px 0px #000000,
+    2px 2px 0px #ffffff,
+    1px 1px 0px #ffffff,
+    5px 1px 0px #ffffff,
+    1px 5px 0px #ffffff,
+    5px 5px 0px #ffffff;
+}
+
+.snake::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 1px;
+  height: 1px;
+  background: #ffffff;
+  border-radius: 50%;
+  box-shadow: 
+    2px 0px 0px #ffffff,
+    0px 2px 0px #ffffff,
+    2px 2px 0px #ffffff;
+}
+
+.snake-head {
+  background: #ffffff;
+  border: 2px solid #000000;
+  box-shadow: 
+    2px 2px 0px #000000,
+    4px 4px 0px #ffffff;
+  animation: headPulse 0.5s ease-in-out infinite alternate;
+  position: relative;
+}
+
+.snake-head::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 2px;
+  height: 2px;
+  background: #000000;
+  border-radius: 50%;
+  box-shadow: 
+    6px 0px 0px #000000,
+    0px 6px 0px #000000,
+    6px 6px 0px #000000,
+    3px 3px 0px #000000,
+    1px 1px 0px #ffffff,
+    7px 1px 0px #ffffff,
+    1px 7px 0px #ffffff,
+    7px 7px 0px #ffffff;
+}
+
+.snake-head::after {
+  content: '';
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 1px;
+  height: 1px;
+  background: #ffffff;
+  border-radius: 50%;
+  box-shadow: 
+    7px 0px 0px #ffffff,
+    0px 7px 0px #ffffff,
+    7px 7px 0px #ffffff,
+    4px 4px 0px #ffffff;
+}
+
+.snake-tail {
+  background: #ffffff;
+  border: 1px solid #000000;
+  box-shadow: 
+    1px 1px 0px #000000,
+    2px 2px 0px #ffffff;
+  position: relative;
+}
+
+.snake-tail::before {
+  content: '';
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 1px;
+  height: 1px;
+  background: #000000;
+  border-radius: 50%;
+  box-shadow: 
+    2px 0px 0px #000000,
+    0px 2px 0px #000000,
+    2px 2px 0px #000000,
+    1px 1px 0px #ffffff;
+}
+
+@keyframes headPulse {
+  0% { 
+    transform: scale(1);
+    box-shadow: 
+      2px 2px 0px #000000,
+      4px 4px 0px #ffffff;
+  }
+  100% { 
+    transform: scale(1.05);
+    box-shadow: 
+      3px 3px 0px #000000,
+      6px 6px 0px #ffffff;
+  }
 }
 
 .apple {
-  background-color: #39FF14;
+  background: #ff0000;
+  border: 2px solid #ffffff;
+  box-shadow: 
+    2px 2px 0px #ffffff,
+    4px 4px 0px #000000;
+  animation: applePulse 1.5s ease-in-out infinite alternate;
+  position: relative;
+}
+
+.apple::before {
+  content: '';
+  position: absolute;
+  top: 0px;
+  left: 2px;
+  width: 2px;
+  height: 2px;
+  background: #00ff00;
   border-radius: 50%;
+  box-shadow: 
+    4px 0px 0px #00ff00,
+    0px 4px 0px #00ff00,
+    4px 4px 0px #00ff00,
+    2px 2px 0px #ffffff;
 }
 
-.dark {
-  background-color: black;
-  color: white;
+.apple::after {
+  content: '';
+  position: absolute;
+  top: 1px;
+  left: 3px;
+  width: 1px;
+  height: 1px;
+  background: #ffffff;
+  border-radius: 50%;
+  box-shadow: 
+    2px 0px 0px #ffffff,
+    0px 2px 0px #ffffff,
+    2px 2px 0px #ffffff,
+    1px 1px 0px #000000;
 }
 
-.light {
-  background-color: white;
-  color: black;
+@keyframes applePulse {
+  0% { 
+    transform: scale(1);
+    box-shadow: 
+      2px 2px 0px #ffffff,
+      4px 4px 0px #000000;
+  }
+  100% { 
+    transform: scale(1.1);
+    box-shadow: 
+      3px 3px 0px #ffffff,
+      6px 6px 0px #000000;
+  }
 }
 
-.score {
-  font-family: 'Press Start 2P', cursive;
-  font-size: 2rem;
-  color: white;
+.start-screen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  background: #000000;
+  padding: 2rem;
+  border: 3px solid #ffffff;
+  z-index: 20;
+  box-shadow: 
+    0 0 0 2px #000000,
+    inset 0 0 0 2px #ffffff,
+    4px 4px 0px #ffffff,
+    8px 8px 0px #000000;
+  min-width: 600px;
+}
+
+.start-content {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.start-left {
+  flex: 1;
+  text-align: left;
+}
+
+.start-right {
+  flex: 1;
+  text-align: left;
+}
+
+.start-right h4 {
+  color: #ffffff;
+  margin: 0 0 1rem 0;
+  font-size: 0.8rem;
+  text-shadow: 
+    1px 1px 0px #000000,
+    2px 2px 0px #ffffff;
+}
+
+.power-up-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.power-up-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.power-up-color {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ffffff;
+  box-shadow: 
+    1px 1px 0px #000000,
+    2px 2px 0px #ffffff;
+}
+
+.power-up-item span {
+  color: #ffffff;
+  font-size: 0.6rem;
+  text-shadow: 
+    1px 1px 0px #000000,
+    2px 2px 0px #ffffff;
+}
+
+.power-ups-toggle {
+  margin: 1rem 0;
+  padding: 0.5rem;
+  background: #000000;
+  border: 2px solid #ffffff;
+  box-shadow: 
+    1px 1px 0px #ffffff,
+    2px 2px 0px #000000;
+}
+
+.power-ups-toggle label {
+  color: #ffffff;
+  font-size: 0.6rem;
+  text-shadow: 
+    1px 1px 0px #000000,
+    2px 2px 0px #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.power-ups-toggle input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #00ff00;
+  cursor: pointer;
+}
+
+.no-power-ups {
+  text-align: center;
+}
+
+.no-power-ups h4 {
+  color: #ffffff;
+  margin: 0 0 1rem 0;
+  font-size: 0.8rem;
+  text-shadow: 
+    1px 1px 0px #000000,
+    2px 2px 0px #ffffff;
+}
+
+.no-power-ups p {
+  color: #ffffff;
+  margin: 0.5rem 0;
+  font-size: 0.6rem;
+  text-shadow: 
+    1px 1px 0px #000000,
+    2px 2px 0px #ffffff;
+}
+
+.start-screen h3 {
+  font-size: 1rem;
+  color: #ffffff;
+  text-shadow: 
+    2px 2px 0px #000000,
+    4px 4px 0px #ffffff;
+  margin: 0 0 1rem 0;
+  animation: pixelText 2s ease-in-out infinite alternate;
+}
+
+.start-screen p {
+  color: #ffffff;
+  margin: 0;
+  font-size: 0.6rem;
+  text-shadow: 
+    1px 1px 0px #000000,
+    2px 2px 0px #ffffff;
+}
+
+.pause-screen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  background: #000000;
+  padding: 2rem;
+  border: 3px solid #ffffff;
+  z-index: 20;
+  box-shadow: 
+    0 0 0 2px #000000,
+    inset 0 0 0 2px #ffffff,
+    4px 4px 0px #ffffff,
+    8px 8px 0px #000000;
+}
+
+.pause-screen h3 {
+  font-size: 1rem;
+  color: #ffffff;
+  text-shadow: 
+    2px 2px 0px #000000,
+    4px 4px 0px #ffffff;
+  margin: 0 0 1rem 0;
+  animation: pixelText 2s ease-in-out infinite alternate;
+}
+
+.pause-screen p {
+  color: #ffffff;
+  margin: 0;
+  font-size: 0.6rem;
+  text-shadow: 
+    1px 1px 0px #000000,
+    2px 2px 0px #ffffff;
+}
+
+.paused {
+  color: #ff0000 !important;
+  text-shadow: 
+    1px 1px 0px #000000,
+    2px 2px 0px #ffffff,
+    3px 3px 0px #ff0000 !important;
+  animation: pixelText 1s ease-in-out infinite alternate;
+}
+
+.speed-bar {
+  width: 100%;
+  max-width: 150px;
+  height: 8px;
+  background: #000000;
+  border: 2px solid #ffffff;
+  margin: 0.5rem 0;
+  position: relative;
+  box-shadow: 
+    1px 1px 0px #ffffff,
+    2px 2px 0px #000000;
+}
+
+.speed-fill {
+  height: 100%;
+  background: #00ff00;
+  border: 1px solid #ffffff;
+  box-shadow: 
+    0 0 0 1px #000000,
+    inset 0 0 0 1px #ffffff;
+  transition: width 0.3s ease, background 0.3s ease;
+}
+
+.speed-fill.blocked {
+  background: #ff0000;
+  animation: speedBlocked 1s ease-in-out infinite alternate;
+}
+
+@keyframes speedBlocked {
+  0% { 
+    background: #ff0000;
+    box-shadow: 
+      0 0 0 1px #000000,
+      inset 0 0 0 1px #ffffff;
+  }
+  100% { 
+    background: #ff4444;
+    box-shadow: 
+      0 0 0 1px #000000,
+      inset 0 0 0 1px #ffffff,
+      0 0 5px #ff0000;
+  }
+}
+
+.dark .speed-bar {
+  background: #ffffff;
+  border-color: #000000;
+  box-shadow: 
+    1px 1px 0px #000000,
+    2px 2px 0px #ffffff;
+}
+
+.dark .speed-fill {
+  background: #00ff00;
+  border-color: #000000;
+  box-shadow: 
+    0 0 0 1px #ffffff,
+    inset 0 0 0 1px #000000;
+}
+
+@keyframes pixelText {
+  0% { 
+    text-shadow: 
+      2px 2px 0px #000000,
+      4px 4px 0px #ffffff;
+  }
+  100% { 
+    text-shadow: 
+      2px 2px 0px #000000,
+      4px 4px 0px #ffffff,
+      6px 6px 0px #000000;
+  }
+}
+
+.game-over-screen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  background: #000000;
+  padding: 3rem;
+  border: 4px solid #ffffff;
+  z-index: 20;
+  box-shadow: 
+    0 0 0 2px #000000,
+    inset 0 0 0 2px #ffffff,
+    6px 6px 0px #ffffff,
+    12px 12px 0px #000000;
+  animation: gameOverShake 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes gameOverShake {
+  0% { transform: translate(-50%, -50%) translateX(-2px); }
+  100% { transform: translate(-50%, -50%) translateX(2px); }
 }
 
 .game-over {
-  font-family: 'Press Start 2P', cursive;
-  font-size: 3rem;
-  color: red;
-  font-weight: bold;
+  font-size: 1.5rem;
+  color: #ffffff;
+  text-shadow: 
+    2px 2px 0px #000000,
+    4px 4px 0px #ffffff;
+  margin: 0 0 1rem 0;
+  animation: gameOverPixel 1s ease-in-out infinite alternate;
+}
+
+@keyframes gameOverPixel {
+  0% { 
+    text-shadow: 
+      2px 2px 0px #000000,
+      4px 4px 0px #ffffff;
+  }
+  100% { 
+    text-shadow: 
+      2px 2px 0px #000000,
+      4px 4px 0px #ffffff,
+      6px 6px 0px #000000;
+  }
+}
+
+.restart-button {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.6rem;
+  padding: 1rem 2rem;
+  border: 2px solid #ffffff;
+  background: #000000;
+  color: #ffffff;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all 0.1s ease;
+  margin-top: 1rem;
+  box-shadow: 
+    2px 2px 0px #ffffff,
+    4px 4px 0px #000000;
+}
+
+.restart-button:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 
+    1px 1px 0px #ffffff,
+    3px 3px 0px #000000;
+}
+
+.restart-button:active {
+  transform: translate(1px, 1px);
+  box-shadow: 
+    1px 1px 0px #000000,
+    2px 2px 0px #ffffff;
+}
+
+.controls {
+  margin-top: 2rem;
+  text-align: center;
+  padding: 1rem;
+  background: #000000;
+  border: 2px solid #ffffff;
+  box-shadow: 
+    2px 2px 0px #ffffff,
+    4px 4px 0px #000000;
+}
+
+.controls p {
+  color: #ffffff;
+  margin: 0 0 1rem 0;
+  font-size: 0.6rem;
+  text-shadow: 
+    1px 1px 0px #000000,
+    2px 2px 0px #ffffff;
+}
+
+.back-button {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.6rem;
+  padding: 0.8rem 1.5rem;
+  border: 2px solid #ffffff;
+  background: #000000;
+  color: #ffffff;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all 0.1s ease;
+  box-shadow: 
+    2px 2px 0px #ffffff,
+    4px 4px 0px #000000;
+}
+
+.back-button:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 
+    1px 1px 0px #ffffff,
+    3px 3px 0px #000000;
+}
+
+.dark {
+  background-color: transparent;
+  color: white;
+}
+
+.dark .game-header {
+  background: #000000;
+  border-color: #ffffff;
+  box-shadow: 
+    0 0 0 2px #000000,
+    inset 0 0 0 2px #ffffff;
+}
+
+.dark .score {
+  color: #ffffff;
+  text-shadow: 
+    2px 2px 0px #000000,
+    4px 4px 0px #ffffff;
+}
+
+.dark .game-info p {
+  background: #000000;
+  border-color: #ffffff;
+  color: #ffffff;
+  box-shadow: 
+    2px 2px 0px #ffffff,
+    4px 4px 0px #000000;
+}
+
+.dark .game-board {
+  border-color: #ffffff;
+  background: #000000;
+  box-shadow: 
+    0 0 0 2px #000000,
+    inset 0 0 0 2px #ffffff,
+    4px 4px 0px #ffffff,
+    8px 8px 0px #000000;
+}
+
+.dark .snake {
+  background: #ffffff;
+  border-color: #000000;
+  box-shadow: 
+    1px 1px 0px #000000,
+    2px 2px 0px #ffffff;
+}
+
+.dark .snake-head {
+  background: #ffffff;
+  border-color: #000000;
+  box-shadow: 
+    2px 2px 0px #000000,
+    4px 4px 0px #ffffff;
+}
+
+.dark .snake-tail {
+  background: #ffffff;
+  border-color: #000000;
+  box-shadow: 
+    1px 1px 0px #000000,
+    2px 2px 0px #ffffff;
+}
+
+.dark .apple {
+  background: #ff0000;
+  border-color: #ffffff;
+  box-shadow: 
+    2px 2px 0px #ffffff,
+    4px 4px 0px #000000;
+}
+
+.dark .apple::before {
+  background: #00ff00;
+  box-shadow: 
+    4px 0px 0px #00ff00,
+    0px 4px 0px #00ff00,
+    4px 4px 0px #00ff00,
+    2px 2px 0px #ffffff;
+}
+
+.dark .apple::after {
+  background: #ffffff;
+  box-shadow: 
+    2px 0px 0px #ffffff,
+    0px 2px 0px #ffffff,
+    2px 2px 0px #ffffff,
+    1px 1px 0px #000000;
+}
+
+.dark .start-screen {
+  background: #000000;
+  border-color: #ffffff;
+  box-shadow: 
+    0 0 0 2px #000000,
+    inset 0 0 0 2px #ffffff,
+    4px 4px 0px #ffffff,
+    8px 8px 0px #000000;
+}
+
+.dark .start-screen h3 {
+  color: #ffffff;
+  text-shadow: 
+    2px 2px 0px #000000,
+    4px 4px 0px #ffffff;
+}
+
+.dark .start-screen p {
+  color: #ffffff;
+  text-shadow: 
+    1px 1px 0px #000000,
+    2px 2px 0px #ffffff;
+}
+
+.dark .game-over-screen {
+  background: #000000;
+  border-color: #ffffff;
+  box-shadow: 
+    0 0 0 2px #000000,
+    inset 0 0 0 2px #ffffff,
+    6px 6px 0px #ffffff,
+    12px 12px 0px #000000;
+}
+
+.dark .game-over {
+  color: #ffffff;
+  text-shadow: 
+    2px 2px 0px #000000,
+    4px 4px 0px #ffffff;
+}
+
+.dark .restart-button {
+  background: #000000;
+  color: #ffffff;
+  border-color: #ffffff;
+  box-shadow: 
+    2px 2px 0px #ffffff,
+    4px 4px 0px #000000;
+}
+
+.dark .controls {
+  background: #000000;
+  border-color: #ffffff;
+  box-shadow: 
+    2px 2px 0px #ffffff,
+    4px 4px 0px #000000;
+}
+
+.dark .controls p {
+  color: #ffffff;
+  text-shadow: 
+    1px 1px 0px #000000,
+    2px 2px 0px #ffffff;
+}
+
+.dark .back-button {
+  background: #000000;
+  color: #ffffff;
+  border-color: #ffffff;
+  box-shadow: 
+    2px 2px 0px #ffffff,
+    4px 4px 0px #000000;
+}
+
+.light {
+  background-color: transparent;
+  color: black;
+}
+
+.light .game-header {
+  background: #ffffff;
+  border-color: #000000;
+  box-shadow: 
+    0 0 0 2px #ffffff,
+    inset 0 0 0 2px #000000;
+}
+
+.light .score {
+  color: #000000;
+  text-shadow: 
+    2px 2px 0px #ffffff,
+    4px 4px 0px #000000;
+}
+
+.light .game-info p {
+  background: #ffffff;
+  border-color: #000000;
+  color: #000000;
+  box-shadow: 
+    2px 2px 0px #000000,
+    4px 4px 0px #ffffff;
+}
+
+.light .game-board {
+  border-color: #000000;
+  background: #ffffff;
+  box-shadow: 
+    0 0 0 2px #ffffff,
+    inset 0 0 0 2px #000000,
+    4px 4px 0px #000000,
+    8px 8px 0px #ffffff;
+}
+
+.light .snake {
+  background: #000000;
+  border-color: #ffffff;
+  box-shadow: 
+    1px 1px 0px #ffffff,
+    2px 2px 0px #000000;
+}
+
+.light .snake-head {
+  background: #000000;
+  border-color: #ffffff;
+  box-shadow: 
+    2px 2px 0px #ffffff,
+    4px 4px 0px #000000;
+}
+
+.light .snake-tail {
+  background: #000000;
+  border-color: #ffffff;
+  box-shadow: 
+    1px 1px 0px #ffffff,
+    2px 2px 0px #000000;
+}
+
+.light .apple {
+  background: #ff0000;
+  border-color: #000000;
+  box-shadow: 
+    2px 2px 0px #000000,
+    4px 4px 0px #ffffff;
+}
+
+.light .apple::before {
+  background: #00ff00;
+  box-shadow: 
+    4px 0px 0px #00ff00,
+    0px 4px 0px #00ff00,
+    4px 4px 0px #00ff00,
+    2px 2px 0px #000000;
+}
+
+.light .apple::after {
+  background: #000000;
+  box-shadow: 
+    2px 0px 0px #000000,
+    0px 2px 0px #000000,
+    2px 2px 0px #000000,
+    1px 1px 0px #ffffff;
+}
+
+.light .start-screen {
+  background: #ffffff;
+  border-color: #000000;
+  box-shadow: 
+    0 0 0 2px #ffffff,
+    inset 0 0 0 2px #000000,
+    4px 4px 0px #000000,
+    8px 8px 0px #ffffff;
+}
+
+.light .start-screen h3 {
+  color: #000000;
+  text-shadow: 
+    2px 2px 0px #ffffff,
+    4px 4px 0px #000000;
+}
+
+.light .start-screen p {
+  color: #000000;
+  text-shadow: 
+    1px 1px 0px #ffffff,
+    2px 2px 0px #000000;
+}
+
+.light .game-over-screen {
+  background: #ffffff;
+  border-color: #000000;
+  box-shadow: 
+    0 0 0 2px #ffffff,
+    inset 0 0 0 2px #000000,
+    6px 6px 0px #000000,
+    12px 12px 0px #ffffff;
+}
+
+.light .game-over {
+  color: #000000;
+  text-shadow: 
+    2px 2px 0px #ffffff,
+    4px 4px 0px #000000;
+}
+
+.light .restart-button {
+  background: #ffffff;
+  color: #000000;
+  border-color: #000000;
+  box-shadow: 
+    2px 2px 0px #000000,
+    4px 4px 0px #ffffff;
+}
+
+.light .controls {
+  background: #ffffff;
+  border-color: #000000;
+  box-shadow: 
+    2px 2px 0px #000000,
+    4px 4px 0px #ffffff;
+}
+
+.light .controls p {
+  color: #000000;
+  text-shadow: 
+    1px 1px 0px #ffffff,
+    2px 2px 0px #000000;
+}
+
+.light .back-button {
+  background: #ffffff;
+  color: #000000;
+  border-color: #000000;
+  box-shadow: 
+    2px 2px 0px #000000,
+    4px 4px 0px #ffffff;
+}
+
+.light .pause-screen {
+  background: #ffffff;
+  border-color: #000000;
+  box-shadow: 
+    0 0 0 2px #ffffff,
+    inset 0 0 0 2px #000000,
+    4px 4px 0px #000000,
+    8px 8px 0px #ffffff;
+}
+
+.light .pause-screen h3 {
+  color: #000000;
+  text-shadow: 
+    2px 2px 0px #ffffff,
+    4px 4px 0px #000000;
+}
+
+.light .pause-screen p {
+  color: #000000;
+  text-shadow: 
+    1px 1px 0px #ffffff,
+    2px 2px 0px #000000;
+}
+
+.light .paused {
+  color: #ff0000 !important;
+  text-shadow: 
+    1px 1px 0px #ffffff,
+    2px 2px 0px #000000,
+    3px 3px 0px #ff0000 !important;
+}
+
+.light .speed-bar {
+  background: #ffffff;
+  border-color: #000000;
+  box-shadow: 
+    1px 1px 0px #000000,
+    2px 2px 0px #ffffff;
+}
+
+.light .speed-fill {
+  background: #00ff00;
+  border-color: #000000;
+  box-shadow: 
+    0 0 0 1px #ffffff,
+    inset 0 0 0 1px #000000;
+}
+
+.power-up {
+  border: 2px solid #ffffff !important;
+  box-shadow: 
+    0 0 0 2px #000000,
+    inset 0 0 0 2px #ffffff,
+    2px 2px 0px #ffffff,
+    4px 4px 0px #000000;
+  animation: powerUpPulse 1s ease-in-out infinite alternate;
+  transition: opacity 0.3s ease;
+}
+
+.active-power-up {
+  margin: 0;
+  padding: 0.5rem;
+  background: #000000;
+  border: 2px solid #ffffff;
+  box-shadow: 
+    1px 1px 0px #ffffff,
+    2px 2px 0px #000000;
+  width: auto;
+  min-width: 120px;
+  max-width: 200px;
+}
+
+.active-power-up p {
+  color: #ffffff;
+  margin: 0;
+  font-size: 0.6rem;
+  text-shadow: 
+    1px 1px 0px #000000,
+    2px 2px 0px #ffffff;
+}
+
+.power-up-timer {
+  width: 100%;
+  max-width: 100px;
+  height: 6px;
+  background: #000000;
+  border: 1px solid #ffffff;
+  margin: 0.25rem 0;
+  position: relative;
+}
+
+.timer-fill {
+  height: 100%;
+  background: #00ff00;
+  border: 1px solid #ffffff;
+  transition: width 0.1s ease;
+}
+
+
+.dark .active-power-up {
+  background: #000000;
+  border-color: #ffffff;
+}
+
+.dark .active-power-up p {
+  color: #ffffff;
+  text-shadow: 
+    1px 1px 0px #000000,
+    2px 2px 0px #ffffff;
+}
+
+.dark .power-up-timer {
+  background: #000000;
+  border-color: #ffffff;
+}
+
+.light .active-power-up {
+  background: #ffffff;
+  border-color: #000000;
+}
+
+.light .active-power-up p {
+  color: #000000;
+  text-shadow: 
+    1px 1px 0px #ffffff,
+    2px 2px 0px #000000;
+}
+
+.light .power-up-timer {
+  background: #ffffff;
+  border-color: #000000;
+}
+
+.light .start-screen {
+  background: #ffffff;
+  border-color: #000000;
+  box-shadow: 
+    0 0 0 2px #ffffff,
+    inset 0 0 0 2px #000000,
+    4px 4px 0px #000000,
+    8px 8px 0px #ffffff;
+}
+
+.light .start-right h4 {
+  color: #000000;
+  text-shadow: 
+    1px 1px 0px #ffffff,
+    2px 2px 0px #000000;
+}
+
+.light .power-up-color {
+  border-color: #000000;
+  box-shadow: 
+    1px 1px 0px #ffffff,
+    2px 2px 0px #000000;
+}
+
+.light .power-up-item span {
+  color: #000000;
+  text-shadow: 
+    1px 1px 0px #ffffff,
+    2px 2px 0px #000000;
+}
+
+.light .power-ups-toggle {
+  background: #ffffff;
+  border-color: #000000;
+  box-shadow: 
+    1px 1px 0px #000000,
+    2px 2px 0px #ffffff;
+}
+
+.light .power-ups-toggle label {
+  color: #000000;
+  text-shadow: 
+    1px 1px 0px #ffffff,
+    2px 2px 0px #000000;
+}
+
+.light .no-power-ups h4 {
+  color: #000000;
+  text-shadow: 
+    1px 1px 0px #ffffff,
+    2px 2px 0px #000000;
+}
+
+.light .no-power-ups p {
+  color: #000000;
+  text-shadow: 
+    1px 1px 0px #ffffff,
+    2px 2px 0px #000000;
+}
+
+
+@keyframes powerUpPulse {
+  0% { 
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% { 
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
 }
 

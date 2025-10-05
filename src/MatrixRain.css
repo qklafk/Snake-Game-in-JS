@@ -1,0 +1,71 @@
+/* MatrixRain.css */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+.matrix-rain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  font-family: 'Press Start 2P', monospace;
+}
+
+.matrix-column {
+  position: absolute;
+  top: -100%;
+  width: 20px;
+  height: 200%;
+  animation: matrixFall linear infinite;
+}
+
+.matrix-char {
+  display: block;
+  line-height: 1.2;
+  font-size: 12px;
+  animation: matrixChar linear infinite;
+}
+
+.dark .matrix-char {
+  color: rgba(255, 255, 255, 0.1);
+  text-shadow: 0 0 2px rgba(255, 255, 255, 0.2);
+}
+
+.light .matrix-char {
+  color: rgba(0, 0, 0, 0.1);
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes matrixFall {
+  0% { 
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { 
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+@keyframes matrixChar {
+  0% { 
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  10% { 
+    opacity: 1;
+    transform: scale(1);
+  }
+  90% { 
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% { 
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
