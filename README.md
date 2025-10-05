@@ -46,7 +46,3 @@ npm start
 ```bash
 npm run build
 ```
-
-## Лицензия
-
-MIT License
